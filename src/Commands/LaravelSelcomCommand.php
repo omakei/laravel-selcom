@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Omakei\LaravelSelcom\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelSelcomCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-selcom';
 
     public $description = 'My command';
 

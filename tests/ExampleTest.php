@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace Omakei\LaravelSelcom\Tests;
 
 class ExampleTest extends TestCase
 {
