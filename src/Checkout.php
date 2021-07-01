@@ -3,10 +3,8 @@
 
 namespace Omakei\LaravelSelcom;
 
-
 class Checkout
 {
-
     public static function createOrderLong(
         string $vendor,
         string $order_id,
@@ -45,54 +43,54 @@ class Checkout
         string $header_colour,
         string $link_colour,
         string $button_colour
-    )
-    {
-       $payload =  self::makeCreateOrderLongPayload(
-         $vendor,
-         $order_id,
-         $buyer_email,
-         $buyer_name,
-         $buyer_userid,
-         $buyer_phone,
-         $gateway_buyer_uuid,
-         $amount,
-         $currency,
-         $payment_methods,
-         $redirect_url,
-         $cancel_url,
-         $webhook,
-         $billing_firstname,
-         $billing_lastname,
-         $billing_address_1,
-         $billing_address_2,
-         $billing_city,
-         $billing_state_or_region,
-         $billing_postcode_or_pobox,
-         $billing_country,
-         $billing_phone,
-         $shipping_firstname,
-         $shipping_lastname,
-         $shipping_address_1,
-         $shipping_address_2,
-         $shipping_city,
-         $shipping_state_or_region,
-         $shipping_postcode_or_pobox,
-         $shipping_country,
-         $shipping_phone,
-         $buyer_remarks,
-         $merchant_remarks,
-         $no_of_items,
-         $header_colour,
-         $link_colour,
-         $button_colour
-       );
+    ) {
+        $payload = self::makeCreateOrderLongPayload(
+            $vendor,
+            $order_id,
+            $buyer_email,
+            $buyer_name,
+            $buyer_userid,
+            $buyer_phone,
+            $gateway_buyer_uuid,
+            $amount,
+            $currency,
+            $payment_methods,
+            $redirect_url,
+            $cancel_url,
+            $webhook,
+            $billing_firstname,
+            $billing_lastname,
+            $billing_address_1,
+            $billing_address_2,
+            $billing_city,
+            $billing_state_or_region,
+            $billing_postcode_or_pobox,
+            $billing_country,
+            $billing_phone,
+            $shipping_firstname,
+            $shipping_lastname,
+            $shipping_address_1,
+            $shipping_address_2,
+            $shipping_city,
+            $shipping_state_or_region,
+            $shipping_postcode_or_pobox,
+            $shipping_country,
+            $shipping_phone,
+            $buyer_remarks,
+            $merchant_remarks,
+            $no_of_items,
+            $header_colour,
+            $link_colour,
+            $button_colour
+        );
 
-       $client = new LaravelSelcomClient($payload);
+        $client = new LaravelSelcomClient($payload);
 
-      return $client->sendRequest(config('urls.checkout.create_order_long.method','post'),
-                                  config('urls.checkout.create_order_long.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.create_order_long.method', 'post'),
+            config('urls.checkout.create_order_long.ulr', '')
+        );
     }
-
 
     private static function makeCreateOrderLongPayload(
         string $vendor,
@@ -132,46 +130,45 @@ class Checkout
         string $header_colour,
         string $link_colour,
         string $button_colour
-    ): array
-    {
+    ): array {
         return [
-        'vendor'  => $vendor,
-        'order_id'  => $order_id,
-        'buyer_email'  => $buyer_email,
-        'buyer_name'  => $buyer_name,
-        'buyer_userid'  => $buyer_userid,
-        'buyer_phone'  => $buyer_phone,
-        'gateway_buyer_uuid'  => $gateway_buyer_uuid,
-        'amount'  => $amount,
-        'currency'  => $currency,
-        'payment_methods'  => $payment_methods,
-        'redirect_url'  => $redirect_url,
-        'cancel_url'  => $cancel_url,
-        'webhook'  => $webhook,
-        'billing_firstname'  => $billing_firstname,
-        'billing_lastname'  => $billing_lastname,
-        'billing_address_1'  => $billing_address_1,
-        'billing_address_2'  => $billing_address_2,
-        'billing_city'  => $billing_city,
-        'billing_state_or_region'  => $billing_state_or_region,
-        'billing_postcode_or_pobox'  => $billing_postcode_or_pobox,
-        'billing_country'  => $billing_country,
-        'billing_phone'  => $billing_phone,
-        'shipping_firstname'  => $shipping_firstname,
-        'shipping_lastname'  => $shipping_lastname,
-        'shipping_address_1'  => $shipping_address_1,
-        'shipping_address_2'  => $shipping_address_2,
-        'shipping_city'  => $shipping_city,
-        'shipping_state_or_region'  => $shipping_state_or_region,
-        'shipping_postcode_or_pobox'  => $shipping_postcode_or_pobox,
-        'shipping_country'  => $shipping_country,
-        'shipping_phone'  => $shipping_phone,
-        'buyer_remarks'  => $buyer_remarks,
-        'merchant_remarks'  => $merchant_remarks,
-        'no_of_items'  => $no_of_items,
-        'header_colour'  => $header_colour,
-        'link_colour'  => $link_colour,
-        'button_colour'  => $button_colour
+        'vendor' => $vendor,
+        'order_id' => $order_id,
+        'buyer_email' => $buyer_email,
+        'buyer_name' => $buyer_name,
+        'buyer_userid' => $buyer_userid,
+        'buyer_phone' => $buyer_phone,
+        'gateway_buyer_uuid' => $gateway_buyer_uuid,
+        'amount' => $amount,
+        'currency' => $currency,
+        'payment_methods' => $payment_methods,
+        'redirect_url' => $redirect_url,
+        'cancel_url' => $cancel_url,
+        'webhook' => $webhook,
+        'billing_firstname' => $billing_firstname,
+        'billing_lastname' => $billing_lastname,
+        'billing_address_1' => $billing_address_1,
+        'billing_address_2' => $billing_address_2,
+        'billing_city' => $billing_city,
+        'billing_state_or_region' => $billing_state_or_region,
+        'billing_postcode_or_pobox' => $billing_postcode_or_pobox,
+        'billing_country' => $billing_country,
+        'billing_phone' => $billing_phone,
+        'shipping_firstname' => $shipping_firstname,
+        'shipping_lastname' => $shipping_lastname,
+        'shipping_address_1' => $shipping_address_1,
+        'shipping_address_2' => $shipping_address_2,
+        'shipping_city' => $shipping_city,
+        'shipping_state_or_region' => $shipping_state_or_region,
+        'shipping_postcode_or_pobox' => $shipping_postcode_or_pobox,
+        'shipping_country' => $shipping_country,
+        'shipping_phone' => $shipping_phone,
+        'buyer_remarks' => $buyer_remarks,
+        'merchant_remarks' => $merchant_remarks,
+        'no_of_items' => $no_of_items,
+        'header_colour' => $header_colour,
+        'link_colour' => $link_colour,
+        'button_colour' => $button_colour,
             ];
     }
 
@@ -194,9 +191,8 @@ class Checkout
         string $link_colour,
         string $button_colour,
         string $expiry
-    )
-    {
-        $payload =  self::makeCreateOrderMinimalPayload(
+    ) {
+        $payload = self::makeCreateOrderMinimalPayload(
             $vendor,
             $order_id,
             $buyer_email,
@@ -219,10 +215,11 @@ class Checkout
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.checkout.create_order_minimal.method','post'),
-            config('urls.checkout.create_order_minimal.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.create_order_minimal.method', 'post'),
+            config('urls.checkout.create_order_minimal.ulr', '')
+        );
     }
-
 
     private static function makeCreateOrderMinimalPayload(
         string $vendor,
@@ -243,30 +240,28 @@ class Checkout
         string $link_colour,
         string $button_colour,
         string $expiry
-    ): array
-    {
+    ): array {
         return [
-            'vendor'  => $vendor,
-            'order_id'  => $order_id,
-            'buyer_email'  => $buyer_email,
-            'buyer_name'  => $buyer_name,
-            'buyer_phone'  => $buyer_phone,
-            'amount'  => $amount,
-            'currency'  => $currency,
-            'payment_methods'  => $payment_methods,
-            'redirect_url'  => $redirect_url,
-            'cancel_url'  => $cancel_url,
-            'webhook'  => $webhook,
-            'buyer_remarks'  => $buyer_remarks,
-            'merchant_remarks'  => $merchant_remarks,
-            'no_of_items'  => $no_of_items,
-            'header_colour'  => $header_colour,
-            'link_colour'  => $link_colour,
-            'button_colour'  => $button_colour,
-            'expiry' =>  $expiry
+            'vendor' => $vendor,
+            'order_id' => $order_id,
+            'buyer_email' => $buyer_email,
+            'buyer_name' => $buyer_name,
+            'buyer_phone' => $buyer_phone,
+            'amount' => $amount,
+            'currency' => $currency,
+            'payment_methods' => $payment_methods,
+            'redirect_url' => $redirect_url,
+            'cancel_url' => $cancel_url,
+            'webhook' => $webhook,
+            'buyer_remarks' => $buyer_remarks,
+            'merchant_remarks' => $merchant_remarks,
+            'no_of_items' => $no_of_items,
+            'header_colour' => $header_colour,
+            'link_colour' => $link_colour,
+            'button_colour' => $button_colour,
+            'expiry' => $expiry,
         ];
     }
-
 
     public function getOrderStatus(
         string $payment_status,
@@ -277,25 +272,25 @@ class Checkout
         string $channel,
         string $reference,
         string $msisdn,
-    )
-    {
-        $payload =  self::makeOrderStatusPayload(
-                $payment_status,
-                $order_id,
-                $creation_date,
-                $amount,
-                $transid,
-                $channel,
-                $reference,
-                $msisdn,
+    ) {
+        $payload = self::makeOrderStatusPayload(
+            $payment_status,
+            $order_id,
+            $creation_date,
+            $amount,
+            $transid,
+            $channel,
+            $reference,
+            $msisdn,
         );
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.checkout.get_order_status.method','post'),
-            config('urls.checkout.get_order_status.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.get_order_status.method', 'post'),
+            config('urls.checkout.get_order_status.ulr', '')
+        );
     }
-
 
     public static function makeOrderStatusPayload(
         string $payment_status,
@@ -306,8 +301,7 @@ class Checkout
         string $channel,
         string $reference,
         string $msisdn,
-    )
-    {
+    ) {
         return [
             'payment_status' => $payment_status,
             'order_id' => $order_id,
@@ -325,48 +319,48 @@ class Checkout
         string $payment_status,
         string $order_id,
         string $creation_date,
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
-            'result' =>$result,
+            'result' => $result,
             'payment_status' => $payment_status,
             'order_id' => $order_id,
-            'creation_date' => $creation_date
+            'creation_date' => $creation_date,
             ]);
 
-        return $client->sendRequest(config('urls.checkout.get_all_order_list.method','post'),
-            config('urls.checkout.get_all_order_list.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.get_all_order_list.method', 'post'),
+            config('urls.checkout.get_all_order_list.ulr', '')
+        );
     }
 
     public static function getStoredCardTokens(
         string $buyer_userid,
         string $gateway_buyer_uuid
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'buyer_userid' => $buyer_userid,
             'gateway_buyer_uuid' => $gateway_buyer_uuid,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.get_stored_card_tokens.method','post'),
-            config('urls.checkout.get_stored_card_tokens.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.get_stored_card_tokens.method', 'post'),
+            config('urls.checkout.get_stored_card_tokens.ulr', '')
+        );
     }
 
     public static function deleteStoredCardTokens(
         string $id,
         string $gateway_buyer_uuid
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'buyer_userid' => $id,
             'gateway_buyer_uuid' => $gateway_buyer_uuid,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.delete_stored_card_tokens.method','post'),
-            config('urls.checkout.delete_stored_card_tokens.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.delete_stored_card_tokens.method', 'post'),
+            config('urls.checkout.delete_stored_card_tokens.ulr', '')
+        );
     }
 
     public static function processOrderCardPayment(
@@ -376,9 +370,7 @@ class Checkout
         string $card_token,
         string $buyer_userid,
         string $gateway_buyer_uuid
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,
             'vendor' => $vendor,
@@ -388,27 +380,28 @@ class Checkout
             'gateway_buyer_uuid' => $gateway_buyer_uuid,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.process_order_card_payment.method','post'),
-            config('urls.checkout.process_order_card_payment.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.process_order_card_payment.method', 'post'),
+            config('urls.checkout.process_order_card_payment.ulr', '')
+        );
     }
 
     public static function processOrderWalletPullPayment(
         string $transid,
         string $order_id,
         string $msisdn
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,
             'order_id' => $order_id,
             'msisdn' => $msisdn,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.process_order_wallet_pull_payment.method','post'),
-            config('urls.checkout.process_order_wallet_pull_payment.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.process_order_wallet_pull_payment.method', 'post'),
+            config('urls.checkout.process_order_wallet_pull_payment.ulr', '')
+        );
     }
-
 
     public static function webhookCallback(
         string $transid,
@@ -417,9 +410,7 @@ class Checkout
         string $result,
         string $resultcode,
         string $payment_status
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,
             'order_id' => $order_id,
@@ -429,25 +420,26 @@ class Checkout
             'payment_status' => $payment_status,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.webhook_callback.method','post'),
-            config('urls.checkout.webhook_callback.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.webhook_callback.method', 'post'),
+            config('urls.checkout.webhook_callback.ulr', '')
+        );
     }
 
     public static function paymentRefund(
         string $transid,
         string $original_transid,
         string $amount
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,
             'original_transid' => $original_transid,
             'amount' => $amount,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.payment_refund.method','post'),
-            config('urls.checkout.payment_refund.ulr',''));
+        return $client->sendRequest(
+            config('urls.checkout.payment_refund.method', 'post'),
+            config('urls.checkout.payment_refund.ulr', '')
+        );
     }
-
 }

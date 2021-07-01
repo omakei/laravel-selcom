@@ -3,10 +3,8 @@
 
 namespace Omakei\LaravelSelcom;
 
-
 class VCN
 {
-
     public static function create(
         string $msisdn,
         string $account,
@@ -28,37 +26,37 @@ class VCN
         string $pin,
         string $transid,
         string $product_code
-    )
-    {
-       $payload =  self::makeCreatePayload(
-        $msisdn,
-        $account,
-        $first_name,
-        $last_name,
-        $middle_name,
-        $gender,
-        $dob,
-        $address,
-        $city,
-        $region,
-        $nationality,
-        $validity,
-        $email,
-        $language,
-        $marital_status,
-        $maiden_name,
-        $vendor,
-        $pin,
-        $transid,
-        $product_code
-       );
+    ) {
+        $payload = self::makeCreatePayload(
+            $msisdn,
+            $account,
+            $first_name,
+            $last_name,
+            $middle_name,
+            $gender,
+            $dob,
+            $address,
+            $city,
+            $region,
+            $nationality,
+            $validity,
+            $email,
+            $language,
+            $marital_status,
+            $maiden_name,
+            $vendor,
+            $pin,
+            $transid,
+            $product_code
+        );
 
-       $client = new LaravelSelcomClient($payload);
+        $client = new LaravelSelcomClient($payload);
 
-      return $client->sendRequest(config('urls.vcn.create.method','post'),
-                                  config('urls.vcn.create.ulr',''));
+        return $client->sendRequest(
+            config('urls.vcn.create.method', 'post'),
+            config('urls.vcn.create.ulr', '')
+        );
     }
-
 
     private static function makeCreatePayload(
         string $msisdn,
@@ -81,8 +79,7 @@ class VCN
         string $pin,
         string $transid,
         string $product_code,
-    ): array
-    {
+    ): array {
         return [
             'msisdn' => $msisdn,
             'account' => $account,
@@ -103,10 +100,9 @@ class VCN
             'vendor' => $vendor,
             'pin' => $pin,
             'transid' => $transid,
-            'product_code' => $product_code
+            'product_code' => $product_code,
         ];
     }
-
 
     public function changeStatus(
         string $msisdn,
@@ -116,9 +112,8 @@ class VCN
         string $card_id,
         string $requestid,
         string $language,
-    )
-    {
-        $payload =  self::makeChangeStatusPayload(
+    ) {
+        $payload = self::makeChangeStatusPayload(
             $msisdn,
             $account,
             $status,
@@ -126,14 +121,15 @@ class VCN
             $card_id,
             $requestid,
             $language,
-    );
+        );
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.vcn.change_status.method','post'),
-            config('urls.vcn.change_status.ulr',''));
+        return $client->sendRequest(
+            config('urls.vcn.change_status.method', 'post'),
+            config('urls.vcn.change_status.ulr', '')
+        );
     }
-
 
     public function makeChangeStatusPayload(
         string $msisdn,
@@ -143,8 +139,7 @@ class VCN
         string $card_id,
         string $requestid,
         string $language,
-    )
-    {
+    ) {
         return [
             'msisdn' => $msisdn,
             'account' => $account,
@@ -164,9 +159,8 @@ class VCN
         string $card_id,
         string $requestid,
         string $language,
-    )
-    {
-        $payload =  self::makeChangeStatusPayload(
+    ) {
+        $payload = self::makeChangeStatusPayload(
             $msisdn,
             $account,
             $status,
@@ -178,20 +172,20 @@ class VCN
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.vcn.show_card.method','post'),
-            config('urls.vcn.show_card.ulr',''));
+        return $client->sendRequest(
+            config('urls.vcn.show_card.method', 'post'),
+            config('urls.vcn.show_card.ulr', '')
+        );
     }
-
-
-
 
     public function getCardStatus(string $msisdn, string $account)
     {
+        $client = new LaravelSelcomClient(['msisdn' => $msisdn, 'account' => $account]);
 
-        $client = new LaravelSelcomClient(['msisdn' =>$msisdn, 'account' => $account]);
-
-        return $client->sendRequest(config('urls.vcn.get_card_status.method','post'),
-            config('urls.vcn.get_card_status.ulr',''));
+        return $client->sendRequest(
+            config('urls.vcn.get_card_status.method', 'post'),
+            config('urls.vcn.get_card_status.ulr', '')
+        );
     }
 
     public function setTransactionLimit(
@@ -200,18 +194,17 @@ class VCN
         string $limit_amount,
         string $limit_type,
         string $card_id
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
-            'msisdn' =>$msisdn,
+            'msisdn' => $msisdn,
             'account' => $account,
             'limit_amount' => $limit_amount,
             'limit_type' => $limit_type,
-            'card_id' => $card_id]);
+            'card_id' => $card_id, ]);
 
-        return $client->sendRequest(config('urls.vcn.set_transaction_limit.method','post'),
-            config('urls.vcn.set_transaction_limit.ulr',''));
+        return $client->sendRequest(
+            config('urls.vcn.set_transaction_limit.method', 'post'),
+            config('urls.vcn.set_transaction_limit.ulr', '')
+        );
     }
-
 }

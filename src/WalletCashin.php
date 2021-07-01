@@ -3,34 +3,34 @@
 
 namespace Omakei\LaravelSelcom;
 
-
 class WalletCashin
 {
-
     public static function pay(
-       string $transid,
-       string $utilitycode,
-       string $utilityref,
-       string $amount,
-       string $vendor,
-       string $pin,
-       string $msisdn,
-    )
-    {
-       $payload =  self::makePaymentPayload(  $transid,
-        $utilitycode,
-        $utilityref,
-        $amount,
-        $vendor,
-        $pin,
-        $msisdn);
+        string $transid,
+        string $utilitycode,
+        string $utilityref,
+        string $amount,
+        string $vendor,
+        string $pin,
+        string $msisdn,
+    ) {
+        $payload = self::makePaymentPayload(
+            $transid,
+            $utilitycode,
+            $utilityref,
+            $amount,
+            $vendor,
+            $pin,
+            $msisdn
+        );
 
-       $client = new LaravelSelcomClient($payload);
+        $client = new LaravelSelcomClient($payload);
 
-      return $client->sendRequest(config('urls.wallet_cashin.pay.method','post'),
-                                  config('urls.wallet_cashin.pay.ulr',''));
+        return $client->sendRequest(
+            config('urls.wallet_cashin.pay.method', 'post'),
+            config('urls.wallet_cashin.pay.ulr', '')
+        );
     }
-
 
     private static function makePaymentPayload(
         string $transid,
@@ -40,8 +40,7 @@ class WalletCashin
         string $vendor,
         string $pin,
         string $msisdn,
-    ): array
-    {
+    ): array {
         return [
             'transid' => $transid,
             'utilitycode' => $utilitycode,
@@ -53,17 +52,17 @@ class WalletCashin
         ];
     }
 
-
     public function lookup(string $utilitycode, string $utilityref, string $transid)
     {
-        $payload =  self::makeLookupPayload( $transid,  $utilitycode, $utilityref);
+        $payload = self::makeLookupPayload($transid,  $utilitycode, $utilityref);
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.wallet_cashin.lookup.method','post'),
-            config('urls.wallet_cashin.lookup.ulr',''));
+        return $client->sendRequest(
+            config('urls.wallet_cashin.lookup.method', 'post'),
+            config('urls.wallet_cashin.lookup.ulr', '')
+        );
     }
-
 
     public function makeLookupPayload(string $utilitycode, string $utilityref, string $transid)
     {
@@ -76,11 +75,11 @@ class WalletCashin
 
     public function queryPaymentStatus(string $transid)
     {
+        $client = new LaravelSelcomClient(['transid' => $transid]);
 
-        $client = new LaravelSelcomClient(['transid' =>$transid]);
-
-        return $client->sendRequest(config('urls.utility_payments.query_payment_status.method','post'),
-            config('urls.utility_payments.query_payment_status.ulr',''));
+        return $client->sendRequest(
+            config('urls.utility_payments.query_payment_status.method', 'post'),
+            config('urls.utility_payments.query_payment_status.ulr', '')
+        );
     }
-
 }

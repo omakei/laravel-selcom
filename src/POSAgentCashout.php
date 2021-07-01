@@ -3,34 +3,34 @@
 
 namespace Omakei\LaravelSelcom;
 
-
 class POSAgentCashout
 {
-
     public static function process(
-       string $transid,
-       string $utilitycode,
-       string $utilityref,
-       string $amount,
-       string $vendor,
-       string $pin,
-       string $name,
-    )
-    {
-       $payload =  self::makePaymentPayload(  $transid,
-        $utilitycode,
-        $utilityref,
-        $amount,
-        $vendor,
-        $pin,
-        $name);
+        string $transid,
+        string $utilitycode,
+        string $utilityref,
+        string $amount,
+        string $vendor,
+        string $pin,
+        string $name,
+    ) {
+        $payload = self::makePaymentPayload(
+            $transid,
+            $utilitycode,
+            $utilityref,
+            $amount,
+            $vendor,
+            $pin,
+            $name
+        );
 
-       $client = new LaravelSelcomClient($payload);
+        $client = new LaravelSelcomClient($payload);
 
-      return $client->sendRequest(config('urls.pos_agent_cashout.process.method','post'),
-                                  config('urls.pos_agent_cashout.process.ulr',''));
+        return $client->sendRequest(
+            config('urls.pos_agent_cashout.process.method', 'post'),
+            config('urls.pos_agent_cashout.process.ulr', '')
+        );
     }
-
 
     private static function makePaymentPayload(
         string $transid,
@@ -40,8 +40,7 @@ class POSAgentCashout
         string $vendor,
         string $pin,
         string $name,
-    ): array
-    {
+    ): array {
         return [
             'transid' => $transid,
             'utilitycode' => $utilitycode,
@@ -53,17 +52,17 @@ class POSAgentCashout
         ];
     }
 
-
     public function balance(string $vendor, string $pin)
     {
-        $payload =  self::makeBalancePayload( $vendor,  $pin);
+        $payload = self::makeBalancePayload($vendor,  $pin);
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.pos_agent_cashout.balance.method','post'),
-            config('urls.pos_agent_cashout.balance.ulr',''));
+        return $client->sendRequest(
+            config('urls.pos_agent_cashout.balance.method', 'post'),
+            config('urls.pos_agent_cashout.balance.ulr', '')
+        );
     }
-
 
     public function makeBalancePayload(string $vendor, string $pin)
     {
@@ -75,11 +74,11 @@ class POSAgentCashout
 
     public function queryTransactionStatus(string $transid)
     {
+        $client = new LaravelSelcomClient(['transid' => $transid]);
 
-        $client = new LaravelSelcomClient(['transid' =>$transid]);
-
-        return $client->sendRequest(config('urls.pos_agent_cashout.query_transaction_status.method','post'),
-            config('urls.pos_agent_cashout.query_transaction_status.ulr',''));
+        return $client->sendRequest(
+            config('urls.pos_agent_cashout.query_transaction_status.method', 'post'),
+            config('urls.pos_agent_cashout.query_transaction_status.ulr', '')
+        );
     }
-
 }

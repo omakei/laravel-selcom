@@ -3,15 +3,12 @@
 
 namespace Omakei\LaravelSelcom;
 
-
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use mysql_xdevapi\Exception;
 
 class LaravelSelcomClient
 {
-
     protected array $headers;
 
     protected string $authorization;
@@ -22,11 +19,8 @@ class LaravelSelcomClient
 
     protected string $signed_fields;
 
-
-
     public function __construct(public array $payload)
     {
-
         date_default_timezone_set(config('selcom.timezone'));
 
         $this->setAuthorization(base64_encode(config('selcom.key')));
@@ -48,7 +42,6 @@ class LaravelSelcomClient
             "Signed-Fields" => $this->signed_fields,
         ]);
     }
-
 
     /**
      * @return string
@@ -132,132 +125,100 @@ class LaravelSelcomClient
 
     private function computeSignature(array $parameters, string $signed_fields): string
     {
-
         $fields_order = explode(',', $signed_fields);
 
         $sign_data = "timestamp=". $this->getTimestamp();
 
         foreach ($fields_order as $key) {
-
             $sign_data .= "&$key=".$parameters[$key];
-
         }
 
         //RS256 Signature Method
-        if(config('selcom.encoding_type') === 'RS256') {
-
+        if (config('selcom.encoding_type') === 'RS256') {
             $private_key_pem = openssl_get_privatekey(file_get_contents(config('path_to_private_key_file')));
 
             openssl_sign($sign_data, $signature, $private_key_pem, OPENSSL_ALGO_SHA256);
 
             return base64_encode($signature);
-
         }
 
         //HS256 Signature Method
-        if(config('selcom.encoding_type') === 'HS256') {
-
+        if (config('selcom.encoding_type') === 'HS256') {
             return base64_encode(hash_hmac('sha256', $sign_data, config('secret'), true));
-
         }
 
         return '';
-
     }
 
-
-    public function sendPostRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendPostRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->post($url, $this->payload);
-
-        }catch (\Exception $exception) {
-
+        } catch (\Exception $exception) {
             return $exception;
         }
 
         return  $response;
     }
 
-    public function sendGetRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendGetRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->get($url, $this->payload);
-
-        }catch (\Exception $exception) {
-
+        } catch (\Exception $exception) {
             return $exception;
         }
 
         return  $response;
     }
 
-    public function sendPutRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendPutRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->put($url, $this->payload);
-
-        }catch (\Exception $exception) {
-
+        } catch (\Exception $exception) {
             return $exception;
         }
 
         return  $response;
     }
 
-    public function sendPatchRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendPatchRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->patch($url, $this->payload);
-
-        }catch (\Exception $exception) {
-
+        } catch (\Exception $exception) {
             return $exception;
         }
 
         return  $response;
     }
 
-
-    public function sendDeleteRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendDeleteRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->delete($url, $this->payload);
-
-        }catch (\Exception $exception) {
-
+        } catch (\Exception $exception) {
             return $exception;
         }
 
         return  $response;
     }
-
 
     public function sendRequest(string $type, string $url)
     {
-        if(empty($type) || empty($url)) {
+        if (empty($type) || empty($url)) {
             //
         }
 
-         $request_type = in_array(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
+        $request_type = in_array(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
-         if(is_null($request_type)) {
-             //
-         }
+        if (is_null($request_type)) {
+            //
+        }
 
         return $this->$request_type($type, $url);
     }
-
 
     protected function lookupTable()
     {
@@ -269,6 +230,4 @@ class LaravelSelcomClient
             'delete' => 'sendDeleteRequest',
         ];
     }
-
-
 }
