@@ -12,23 +12,21 @@ class POSAgentCashout
        string $utilitycode,
        string $utilityref,
        string $amount,
-       string $vendor,
        string $pin,
        string $name,
     )
     {
-       $payload =  self::makePaymentPayload(  $transid,
+       $payload =  self::makePaymentPayload($transid,
         $utilitycode,
         $utilityref,
         $amount,
-        $vendor,
         $pin,
         $name);
 
        $client = new LaravelSelcomClient($payload);
 
-      return $client->sendRequest(config('urls.pos_agent_cashout.process.method','post'),
-                                  config('urls.pos_agent_cashout.process.ulr',''));
+      return $client->sendRequest(config('selcom.urls.pos_agent_cashout.process.method','post'),
+                                  config('selcom.urls.pos_agent_cashout.process.ulr',''));
     }
 
 
@@ -37,7 +35,6 @@ class POSAgentCashout
         string $utilitycode,
         string $utilityref,
         string $amount,
-        string $vendor,
         string $pin,
         string $name,
     ): array
@@ -47,28 +44,28 @@ class POSAgentCashout
             'utilitycode' => $utilitycode,
             'utilityref' => $utilityref,
             'amount' => $amount,
-            'vendor' => $vendor,
+            'vendor' => config('selcom.vendor'),
             'pin' => $pin,
             'name' => $name,
         ];
     }
 
 
-    public function balance(string $vendor, string $pin)
+    public function balance(string $pin)
     {
-        $payload =  self::makeBalancePayload( $vendor,  $pin);
+        $payload =  self::makeBalancePayload($pin);
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.pos_agent_cashout.balance.method','post'),
-            config('urls.pos_agent_cashout.balance.ulr',''));
+        return $client->sendRequest(config('selcom.urls.pos_agent_cashout.balance.method','post'),
+            config('selcom.urls.pos_agent_cashout.balance.ulr',''));
     }
 
 
-    public function makeBalancePayload(string $vendor, string $pin)
+    public function makeBalancePayload( string $pin)
     {
         return [
-            'vendor' => $vendor,
+            'vendor' => config('selcom.vendor'),
             'pin' => $pin,
         ];
     }
@@ -78,8 +75,8 @@ class POSAgentCashout
 
         $client = new LaravelSelcomClient(['transid' =>$transid]);
 
-        return $client->sendRequest(config('urls.pos_agent_cashout.query_transaction_status.method','post'),
-            config('urls.pos_agent_cashout.query_transaction_status.ulr',''));
+        return $client->sendRequest(config('selcom.urls.pos_agent_cashout.query_transaction_status.method','post'),
+            config('selcom.urls.pos_agent_cashout.query_transaction_status.ulr',''));
     }
 
 }

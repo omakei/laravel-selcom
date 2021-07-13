@@ -17,6 +17,8 @@ return [
 
     'secret' => env('SELCOM_SECRET', ''),
 
+    'vendor' => env('SELCOM_VENDOR', ''),
+
     'encoding_type' => env('SELCOM_ENCODING_TYPE', 'HS256'),
 
     'path_to_private_key_file' => env('PATH_TO_PRIVATE_KEY_FILE', storage_path('app/keys')),
@@ -28,99 +30,107 @@ return [
     'urls' => [
         'utility_payments' => [
             'pay' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/utilitypayment/process',
                 'method' => 'POST'
             ],
             'lookup' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/utilitypayment/lookup',
+                'method' => 'GET'
             ],
             'query_payment_status' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/utilitypayment/query',
+                'method' => 'GET'
             ]
         ],
         'vcn' => [
             'create' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/vcn/create',
                 'method' => 'POST'
             ],
             'change_status' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/vcn/changestatus',
                 'method' => 'POST'
             ],
             'show_card' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/vcn/show',
                 'method' => 'POST'
             ],
             'get_card_status' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/vcn/status',
+                'method' => 'GET'
             ],
             'set_transaction_limit' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/vcn/set-limit',
                 'method' => 'POST'
             ]
         ],
         'wallet_cashin' => [
             'pay' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/walletcashin/process',
                 'method' => 'POST'
             ],
             'lookup' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/walletcashin/lookup',
+                'method' => 'GET'
             ],
             'query_payment_status' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/walletcashin/query',
+                'method' => 'GET'
             ]
         ],
         'pos_agent_cashout' => [
             'process' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/hudumacashin/process',
                 'method' => 'POST'
             ],
             'balance' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/vendor/balance',
+                'method' => 'GET'
             ],
             'query_transaction_status' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/hudumacashin/query',
+                'method' => 'GET'
             ]
         ],
         'checkout' => [
             'create_order_long' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/create-order',
                 'method' => 'POST'
             ],
             'create_order_minimal' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/create-order-minimal',
                 'method' => 'POST'
+            ],
+            'cancel_order' => [
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/?order_id={order_id}',
+                'method' => 'DELETE'
             ],
             'get_order_status' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/order-status',
+                'method' => 'GET'
             ],
             'get_all_order_list' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/list-orders',
+                'method' => 'GET'
             ],
             'get_stored_card_tokens' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/stored-cards',
+                'method' => 'GET'
             ],
             'delete_stored_card_tokens' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
-                'method' => 'POST'
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/delete-card',
+                'method' => 'DELETE'
             ],
             'process_order_card_payment' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/card-payment',
                 'method' => 'POST'
             ],
             'process_order_wallet_pull_payment' => [
-                'url' => 'http://example.com/v1/utilitypayment/process',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/wallet-payment',
+                'method' => 'POST'
+            ],
+            'payment_refund' => [
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/refund-payment',
                 'method' => 'POST'
             ]
 
@@ -138,7 +148,7 @@ return [
     |
     */
 
-    'path' => env('SELCOM_PATH', 'stripe'),
+    'path' => env('SELCOM_PATH', 'selcom'),
 
     /*
     |--------------------------------------------------------------------------

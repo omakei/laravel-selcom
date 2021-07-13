@@ -24,7 +24,6 @@ class VCN
         string $language,
         string $marital_status,
         string $maiden_name,
-        string $vendor,
         string $pin,
         string $transid,
         string $product_code
@@ -47,7 +46,6 @@ class VCN
         $language,
         $marital_status,
         $maiden_name,
-        $vendor,
         $pin,
         $transid,
         $product_code
@@ -55,8 +53,8 @@ class VCN
 
        $client = new LaravelSelcomClient($payload);
 
-      return $client->sendRequest(config('urls.vcn.create.method','post'),
-                                  config('urls.vcn.create.ulr',''));
+      return $client->sendRequest(config('selcom.urls.vcn.create.method','post'),
+                                  config('selcom.urls.vcn.create.ulr',''));
     }
 
 
@@ -77,7 +75,6 @@ class VCN
         string $language,
         string $marital_status,
         string $maiden_name,
-        string $vendor,
         string $pin,
         string $transid,
         string $product_code,
@@ -100,7 +97,7 @@ class VCN
             'language' => $language,
             'marital_status' => $marital_status,
             'maiden_name' => $maiden_name,
-            'vendor' => $vendor,
+            'vendor' => config('selcom.vendor'),
             'pin' => $pin,
             'transid' => $transid,
             'product_code' => $product_code
@@ -130,8 +127,8 @@ class VCN
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.vcn.change_status.method','post'),
-            config('urls.vcn.change_status.ulr',''));
+        return $client->sendRequest(config('selcom.urls.vcn.change_status.method','post'),
+            config('selcom.urls.vcn.change_status.ulr',''));
     }
 
 
@@ -178,8 +175,8 @@ class VCN
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.vcn.show_card.method','post'),
-            config('urls.vcn.show_card.ulr',''));
+        return $client->sendRequest(config('selcom.urls.vcn.show_card.method','post'),
+            config('selcom.urls.vcn.show_card.ulr',''));
     }
 
 
@@ -190,8 +187,8 @@ class VCN
 
         $client = new LaravelSelcomClient(['msisdn' =>$msisdn, 'account' => $account]);
 
-        return $client->sendRequest(config('urls.vcn.get_card_status.method','post'),
-            config('urls.vcn.get_card_status.ulr',''));
+        return $client->sendRequest(config('selcom.urls.vcn.get_card_status.method','post'),
+            config('selcom.urls.vcn.get_card_status.ulr',''));
     }
 
     public function setTransactionLimit(
@@ -210,8 +207,8 @@ class VCN
             'limit_type' => $limit_type,
             'card_id' => $card_id]);
 
-        return $client->sendRequest(config('urls.vcn.set_transaction_limit.method','post'),
-            config('urls.vcn.set_transaction_limit.ulr',''));
+        return $client->sendRequest(config('selcom.urls.vcn.set_transaction_limit.method','post'),
+            config('selcom.urls.vcn.set_transaction_limit.ulr',''));
     }
 
 }

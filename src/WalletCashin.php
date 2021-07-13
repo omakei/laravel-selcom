@@ -12,7 +12,6 @@ class WalletCashin
        string $utilitycode,
        string $utilityref,
        string $amount,
-       string $vendor,
        string $pin,
        string $msisdn,
     )
@@ -21,14 +20,13 @@ class WalletCashin
         $utilitycode,
         $utilityref,
         $amount,
-        $vendor,
         $pin,
         $msisdn);
 
        $client = new LaravelSelcomClient($payload);
 
-      return $client->sendRequest(config('urls.wallet_cashin.pay.method','post'),
-                                  config('urls.wallet_cashin.pay.ulr',''));
+      return $client->sendRequest(config('selcom.urls.wallet_cashin.pay.method','post'),
+                                  config('selcom.urls.wallet_cashin.pay.ulr',''));
     }
 
 
@@ -37,7 +35,6 @@ class WalletCashin
         string $utilitycode,
         string $utilityref,
         string $amount,
-        string $vendor,
         string $pin,
         string $msisdn,
     ): array
@@ -47,7 +44,7 @@ class WalletCashin
             'utilitycode' => $utilitycode,
             'utilityref' => $utilityref,
             'amount' => $amount,
-            'vendor' => $vendor,
+            'vendor' => config('selcom.vendor'),
             'pin' => $pin,
             'msisdn' => $msisdn,
         ];
@@ -60,8 +57,8 @@ class WalletCashin
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.wallet_cashin.lookup.method','post'),
-            config('urls.wallet_cashin.lookup.ulr',''));
+        return $client->sendRequest(config('selcom.urls.wallet_cashin.lookup.method','post'),
+            config('selcom.urls.wallet_cashin.lookup.ulr',''));
     }
 
 
@@ -79,8 +76,8 @@ class WalletCashin
 
         $client = new LaravelSelcomClient(['transid' =>$transid]);
 
-        return $client->sendRequest(config('urls.utility_payments.query_payment_status.method','post'),
-            config('urls.utility_payments.query_payment_status.ulr',''));
+        return $client->sendRequest(config('selcom.urls.utility_payments.query_payment_status.method','post'),
+            config('selcom.urls.utility_payments.query_payment_status.ulr',''));
     }
 
 }

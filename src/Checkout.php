@@ -7,8 +7,7 @@ namespace Omakei\LaravelSelcom;
 class Checkout
 {
 
-    public static function createOrderLong(
-        string $vendor,
+    public function createOrderLong(
         string $order_id,
         string $buyer_email,
         string $buyer_name,
@@ -48,7 +47,6 @@ class Checkout
     )
     {
        $payload =  self::makeCreateOrderLongPayload(
-         $vendor,
          $order_id,
          $buyer_email,
          $buyer_name,
@@ -94,8 +92,7 @@ class Checkout
     }
 
 
-    private static function makeCreateOrderLongPayload(
-        string $vendor,
+    private function makeCreateOrderLongPayload(
         string $order_id,
         string $buyer_email,
         string $buyer_name,
@@ -135,7 +132,7 @@ class Checkout
     ): array
     {
         return [
-        'vendor'  => $vendor,
+        'vendor'  => config('selcom.vendor'),
         'order_id'  => $order_id,
         'buyer_email'  => $buyer_email,
         'buyer_name'  => $buyer_name,
@@ -175,7 +172,7 @@ class Checkout
             ];
     }
 
-    public static function createOrderMinimal(
+    public function createOrderMinimal(
         string $vendor,
         string $order_id,
         string $buyer_email,
@@ -197,7 +194,6 @@ class Checkout
     )
     {
         $payload =  self::makeCreateOrderMinimalPayload(
-            $vendor,
             $order_id,
             $buyer_email,
             $buyer_name,
@@ -219,13 +215,12 @@ class Checkout
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.checkout.create_order_minimal.method','post'),
-            config('urls.checkout.create_order_minimal.ulr',''));
+        return $client->sendRequest(config('selcom.urls.checkout.create_order_minimal.method','post'),
+            config('selcom.urls.checkout.create_order_minimal.ulr',''));
     }
 
 
-    private static function makeCreateOrderMinimalPayload(
-        string $vendor,
+    private function makeCreateOrderMinimalPayload(
         string $order_id,
         string $buyer_email,
         string $buyer_name,
@@ -246,7 +241,7 @@ class Checkout
     ): array
     {
         return [
-            'vendor'  => $vendor,
+            'vendor'  => config('selcom.vendor'),
             'order_id'  => $order_id,
             'buyer_email'  => $buyer_email,
             'buyer_name'  => $buyer_name,
@@ -265,6 +260,19 @@ class Checkout
             'button_colour'  => $button_colour,
             'expiry' =>  $expiry
         ];
+    }
+
+    public function cancelOrder(
+        string $order_id
+    )
+    {
+
+        $client = new LaravelSelcomClient([
+            'order_id' => $order_id
+        ]);
+
+        return $client->sendRequest(config('selcom.urls.checkout.cancel_order.method','post'),
+            config('selcom.urls.checkout.cancel_order.ulr',''));
     }
 
 
@@ -292,12 +300,12 @@ class Checkout
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('urls.checkout.get_order_status.method','post'),
-            config('urls.checkout.get_order_status.ulr',''));
+        return $client->sendRequest(config('selcom.urls.checkout.get_order_status.method','post'),
+            config('selcom.urls.checkout.get_order_status.ulr',''));
     }
 
 
-    public static function makeOrderStatusPayload(
+    public function makeOrderStatusPayload(
         string $payment_status,
         string $order_id,
         string $creation_date,
@@ -320,7 +328,7 @@ class Checkout
         ];
     }
 
-    public static function getAllOrderList(
+    public function getAllOrderList(
         string $result,
         string $payment_status,
         string $order_id,
@@ -335,11 +343,11 @@ class Checkout
             'creation_date' => $creation_date
             ]);
 
-        return $client->sendRequest(config('urls.checkout.get_all_order_list.method','post'),
-            config('urls.checkout.get_all_order_list.ulr',''));
+        return $client->sendRequest(config('selcom.urls.checkout.get_all_order_list.method','post'),
+            config('selcom.urls.checkout.get_all_order_list.ulr',''));
     }
 
-    public static function getStoredCardTokens(
+    public function getStoredCardTokens(
         string $buyer_userid,
         string $gateway_buyer_uuid
     )
@@ -350,11 +358,11 @@ class Checkout
             'gateway_buyer_uuid' => $gateway_buyer_uuid,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.get_stored_card_tokens.method','post'),
-            config('urls.checkout.get_stored_card_tokens.ulr',''));
+        return $client->sendRequest(config('selcom.urls.checkout.get_stored_card_tokens.method','post'),
+            config('selcom.urls.checkout.get_stored_card_tokens.ulr',''));
     }
 
-    public static function deleteStoredCardTokens(
+    public function deleteStoredCardTokens(
         string $id,
         string $gateway_buyer_uuid
     )
@@ -365,11 +373,11 @@ class Checkout
             'gateway_buyer_uuid' => $gateway_buyer_uuid,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.delete_stored_card_tokens.method','post'),
-            config('urls.checkout.delete_stored_card_tokens.ulr',''));
+        return $client->sendRequest(config('selcom.urls.checkout.delete_stored_card_tokens.method','post'),
+            config('selcom.urls.checkout.delete_stored_card_tokens.ulr',''));
     }
 
-    public static function processOrderCardPayment(
+    public function processOrderCardPayment(
         string $transid,
         string $vendor,
         string $order_id,
@@ -388,11 +396,11 @@ class Checkout
             'gateway_buyer_uuid' => $gateway_buyer_uuid,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.process_order_card_payment.method','post'),
-            config('urls.checkout.process_order_card_payment.ulr',''));
+        return $client->sendRequest(config('selcom.urls.checkout.process_order_card_payment.method','post'),
+            config('selcom.urls.checkout.process_order_card_payment.ulr',''));
     }
 
-    public static function processOrderWalletPullPayment(
+    public function processOrderWalletPullPayment(
         string $transid,
         string $order_id,
         string $msisdn
@@ -405,12 +413,12 @@ class Checkout
             'msisdn' => $msisdn,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.process_order_wallet_pull_payment.method','post'),
-            config('urls.checkout.process_order_wallet_pull_payment.ulr',''));
+        return $client->sendRequest(config('selcom.urls.checkout.process_order_wallet_pull_payment.method','post'),
+            config('selcom.urls.checkout.process_order_wallet_pull_payment.ulr',''));
     }
 
 
-    public static function webhookCallback(
+    public function webhookCallback(
         string $transid,
         string $order_id,
         string $reference,
@@ -429,11 +437,11 @@ class Checkout
             'payment_status' => $payment_status,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.webhook_callback.method','post'),
-            config('urls.checkout.webhook_callback.ulr',''));
+        return $client->sendRequest(config('selcom.urls.checkout.webhook_callback.method','post'),
+            config('selcom.urls.checkout.webhook_callback.ulr',''));
     }
 
-    public static function paymentRefund(
+    public function paymentRefund(
         string $transid,
         string $original_transid,
         string $amount
@@ -446,8 +454,10 @@ class Checkout
             'amount' => $amount,
         ]);
 
-        return $client->sendRequest(config('urls.checkout.payment_refund.method','post'),
-            config('urls.checkout.payment_refund.ulr',''));
+        return $client->sendRequest(config('selcom.urls.checkout.payment_refund.method','post'),
+            config('selcom.urls.checkout.payment_refund.ulr',''));
     }
+
+
 
 }

@@ -8,6 +8,8 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use mysql_xdevapi\Exception;
+use Omakei\LaravelSelcom\Exceptions\InvalidRequestTypeException;
+use Omakei\LaravelSelcom\Exceptions\IvalidUrlOrRequestTypeException;
 
 class LaravelSelcomClient
 {
@@ -245,14 +247,11 @@ class LaravelSelcomClient
 
     public function sendRequest(string $type, string $url)
     {
-        if(empty($type) || empty($url)) {
-            //
-        }
 
          $request_type = in_array(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
          if(is_null($request_type)) {
-             //
+             throw InvalidRequestTypeException::create(strtolower($type));
          }
 
         return $this->$request_type($type, $url);
