@@ -13,7 +13,6 @@ class LaravelSelcomCommand extends Command
 
     public function handle()
     {
-
         $response = LaravelSelcom::checkout()->cancelOrder(2);
 
         dd($response);

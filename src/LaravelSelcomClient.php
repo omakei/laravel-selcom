@@ -135,8 +135,7 @@ class LaravelSelcomClient
         }
 
         //RS256 Signature Method
-        if(config('selcom.encoding_type') === 'RS256') {
-
+        if (config('selcom.encoding_type') === 'RS256') {
             $private_key_pem = openssl_get_privatekey(file_get_contents(config('selcom.path_to_private_key_file')));
 
             openssl_sign($sign_data, $signature, $private_key_pem, OPENSSL_ALGO_SHA256);
@@ -145,10 +144,8 @@ class LaravelSelcomClient
         }
 
         //HS256 Signature Method
-        if(config('selcom.encoding_type') === 'HS256') {
-
+        if (config('selcom.encoding_type') === 'HS256') {
             return base64_encode(hash_hmac('sha256', $sign_data, config('selcom.secret'), true));
-
         }
 
         return '';
@@ -159,8 +156,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->post($url, $this->payload);
             info($response);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             info($exception);
+
             return $exception;
         }
 
@@ -172,8 +170,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->get($url, $this->payload);
             info($response);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             info($exception);
+
             return $exception;
         }
 
@@ -185,8 +184,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->put($url, $this->payload);
             info($response);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             info($exception);
+
             return $exception;
         }
 
@@ -198,8 +198,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->patch($url, $this->payload);
             info($response);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             info($exception);
+
             return $exception;
         }
 
@@ -211,8 +212,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->delete($url, $this->payload);
             info($response);
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             info($exception);
+
             return $exception;
         }
 
@@ -221,12 +223,11 @@ class LaravelSelcomClient
 
     public function sendRequest(string $type, string $url)
     {
+        $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
-         $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
-
-         if(is_null($method)) {
-             throw InvalidRequestTypeException::create(strtolower($method));
-         }
+        if (is_null($method)) {
+            throw InvalidRequestTypeException::create(strtolower($method));
+        }
 
         return $this->$method($url);
     }

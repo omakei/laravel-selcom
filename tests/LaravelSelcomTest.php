@@ -6,7 +6,6 @@ use Omakei\LaravelSelcom\LaravelSelcom;
 
 class LaravelSelcomTest extends TestCase
 {
-
     /** @test */
     public function true_is_true()
     {
