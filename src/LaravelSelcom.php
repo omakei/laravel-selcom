@@ -4,7 +4,6 @@ namespace Omakei\LaravelSelcom;
 
 class LaravelSelcom
 {
-
     public static function checkout()
     {
         return new Checkout();
@@ -29,6 +28,4 @@ class LaravelSelcom
     {
         return new UtilityPayment();
     }
-
-
 }

@@ -136,8 +136,7 @@ class LaravelSelcomClient
         }
 
         //RS256 Signature Method
-        if(config('selcom.encoding_type') === 'RS256') {
-
+        if (config('selcom.encoding_type') === 'RS256') {
             $private_key_pem = openssl_get_privatekey(file_get_contents(config('selcom.path_to_private_key_file')));
 
             openssl_sign($sign_data, $signature, $private_key_pem, OPENSSL_ALGO_SHA256);
@@ -146,10 +145,8 @@ class LaravelSelcomClient
         }
 
         //HS256 Signature Method
-        if(config('selcom.encoding_type') === 'HS256') {
-
+        if (config('selcom.encoding_type') === 'HS256') {
             return base64_encode(hash_hmac('sha256', $sign_data, config('selcom.secret'), true));
-
         }
 
         return '';
@@ -222,6 +219,7 @@ class LaravelSelcomClient
 
     public function sendRequest(string $type, string $url)
     {
+        $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
          $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
