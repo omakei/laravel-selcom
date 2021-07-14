@@ -73,7 +73,9 @@ class POSAgentCashout
     {
         $client = new LaravelSelcomClient(['transid' => $transid]);
 
-        return $client->sendRequest(config('selcom.urls.pos_agent_cashout.query_transaction_status.method','post'),
-            config('selcom.urls.pos_agent_cashout.query_transaction_status.url',''));
+        return $client->sendRequest(
+            config('selcom.urls.pos_agent_cashout.query_transaction_status.method', 'post'),
+            config('selcom.urls.pos_agent_cashout.query_transaction_status.url', '')
+        );
     }
 }

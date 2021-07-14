@@ -157,8 +157,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->post($url, $this->payload);
             Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             Log::error($exception->getMessage());
+
             return $exception;
         }
 
@@ -170,8 +171,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->get($url, $this->payload);
             Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             Log::error($exception->getMessage());
+
             return $exception;
         }
 
@@ -183,8 +185,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->put($url, $this->payload);
             Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             Log::error($exception->getMessage());
+
             return $exception;
         }
 
@@ -196,8 +199,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->patch($url, $this->payload);
             Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             Log::error($exception->getMessage());
+
             return $exception;
         }
 
@@ -209,8 +213,9 @@ class LaravelSelcomClient
         try {
             $response = Http::withHeaders($this->headers)->delete($url, $this->payload);
             Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             Log::error($exception->getMessage());
+
             return $exception;
         }
 
@@ -219,12 +224,11 @@ class LaravelSelcomClient
 
     public function sendRequest(string $type, string $url)
     {
+        $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
-         $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
-
-         if(is_null($method)) {
-             throw InvalidRequestTypeException::create(strtolower($type));
-         }
+        if (is_null($method)) {
+            throw InvalidRequestTypeException::create(strtolower($type));
+        }
 
         return $this->$method($url);
     }
