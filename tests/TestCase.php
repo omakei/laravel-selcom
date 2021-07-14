@@ -3,8 +3,8 @@
 namespace Omakei\LaravelSelcom\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Omakei\LaravelSelcom\LaravelSelcomServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

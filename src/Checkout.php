@@ -3,7 +3,6 @@
 
 namespace Omakei\LaravelSelcom;
 
-
 class Checkout
 {
 
@@ -85,7 +84,7 @@ class Checkout
          $button_colour
        );
 
-       $client = new LaravelSelcomClient($payload);
+        $client = new LaravelSelcomClient($payload);
 
       return $client->sendRequest(config('urls.checkout.create_order_long.method','post'),
                                   config('urls.checkout.create_order_long.url',''));
@@ -129,8 +128,7 @@ class Checkout
         string $header_colour,
         string $link_colour,
         string $button_colour
-    ): array
-    {
+    ): array {
         return [
         'vendor'  => config('selcom.vendor'),
         'order_id'  => $order_id,
@@ -238,8 +236,7 @@ class Checkout
         string $link_colour,
         string $button_colour,
         string $expiry
-    ): array
-    {
+    ): array {
         return [
             'vendor'  => config('selcom.vendor'),
             'order_id'  => $order_id,
@@ -285,17 +282,16 @@ class Checkout
         string $channel,
         string $reference,
         string $msisdn,
-    )
-    {
-        $payload =  self::makeOrderStatusPayload(
-                $payment_status,
-                $order_id,
-                $creation_date,
-                $amount,
-                $transid,
-                $channel,
-                $reference,
-                $msisdn,
+    ) {
+        $payload = self::makeOrderStatusPayload(
+            $payment_status,
+            $order_id,
+            $creation_date,
+            $amount,
+            $transid,
+            $channel,
+            $reference,
+            $msisdn,
         );
 
         $client = new LaravelSelcomClient($payload);
@@ -314,8 +310,7 @@ class Checkout
         string $channel,
         string $reference,
         string $msisdn,
-    )
-    {
+    ) {
         return [
             'payment_status' => $payment_status,
             'order_id' => $order_id,
@@ -333,14 +328,12 @@ class Checkout
         string $payment_status,
         string $order_id,
         string $creation_date,
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
-            'result' =>$result,
+            'result' => $result,
             'payment_status' => $payment_status,
             'order_id' => $order_id,
-            'creation_date' => $creation_date
+            'creation_date' => $creation_date,
             ]);
 
         return $client->sendRequest(config('selcom.urls.checkout.get_all_order_list.method','post'),
@@ -350,9 +343,7 @@ class Checkout
     public function getStoredCardTokens(
         string $buyer_userid,
         string $gateway_buyer_uuid
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'buyer_userid' => $buyer_userid,
             'gateway_buyer_uuid' => $gateway_buyer_uuid,
@@ -365,9 +356,7 @@ class Checkout
     public function deleteStoredCardTokens(
         string $id,
         string $gateway_buyer_uuid
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'buyer_userid' => $id,
             'gateway_buyer_uuid' => $gateway_buyer_uuid,
@@ -384,9 +373,7 @@ class Checkout
         string $card_token,
         string $buyer_userid,
         string $gateway_buyer_uuid
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,
             'vendor' => $vendor,
@@ -404,9 +391,7 @@ class Checkout
         string $transid,
         string $order_id,
         string $msisdn
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,
             'order_id' => $order_id,
@@ -425,9 +410,7 @@ class Checkout
         string $result,
         string $resultcode,
         string $payment_status
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,
             'order_id' => $order_id,
@@ -445,9 +428,7 @@ class Checkout
         string $transid,
         string $original_transid,
         string $amount
-    )
-    {
-
+    ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,
             'original_transid' => $original_transid,

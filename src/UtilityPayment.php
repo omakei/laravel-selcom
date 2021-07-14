@@ -3,10 +3,8 @@
 
 namespace Omakei\LaravelSelcom;
 
-
 class UtilityPayment
 {
-
     public static function pay(
        string $transid,
        string $utilitycode,
@@ -23,12 +21,11 @@ class UtilityPayment
         $pin,
         $msisdn);
 
-       $client = new LaravelSelcomClient($payload);
+        $client = new LaravelSelcomClient($payload);
 
       return $client->sendRequest(config('selcom.urls.utility_payments.pay.method','post'),
                                   config('selcom.urls.utility_payments.pay.url',''));
     }
-
 
     private static function makePaymentPayload(
         string $transid,
@@ -37,8 +34,7 @@ class UtilityPayment
         string $amount,
         string $pin,
         string $msisdn,
-    ): array
-    {
+    ): array {
         return [
             'transid' => $transid,
             'utilitycode' => $utilitycode,
@@ -50,17 +46,15 @@ class UtilityPayment
         ];
     }
 
-
     public function lookup(string $utilitycode, string $utilityref, string $transid)
     {
-        $payload =  self::makeLookupPayload( $transid,  $utilitycode, $utilityref);
+        $payload = self::makeLookupPayload($transid,  $utilitycode, $utilityref);
 
         $client = new LaravelSelcomClient($payload);
 
         return $client->sendRequest(config('selcom.urls.utility_payments.lookup.method','post'),
             config('selcom.urls.utility_payments.lookup.url',''));
     }
-
 
     public function makeLookupPayload(string $utilitycode, string $utilityref, string $transid)
     {
@@ -73,11 +67,11 @@ class UtilityPayment
 
     public function queryPaymentStatus(string $transid)
     {
+        $client = new LaravelSelcomClient(['transid' => $transid]);
 
         $client = new LaravelSelcomClient(['transid' =>$transid]);
 
         return $client->sendRequest(config('selcom.urls.utility_payments.query_payment_status.method','post'),
             config('selcom.urls.utility_payments.query_payment_status.url',''));
     }
-
 }

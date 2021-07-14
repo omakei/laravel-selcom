@@ -3,10 +3,8 @@
 
 namespace Omakei\LaravelSelcom;
 
-
 class POSAgentCashout
 {
-
     public static function process(
        string $transid,
        string $utilitycode,
@@ -23,12 +21,11 @@ class POSAgentCashout
         $pin,
         $name);
 
-       $client = new LaravelSelcomClient($payload);
+        $client = new LaravelSelcomClient($payload);
 
       return $client->sendRequest(config('selcom.urls.pos_agent_cashout.process.method','post'),
                                   config('selcom.urls.pos_agent_cashout.process.url',''));
     }
-
 
     private static function makePaymentPayload(
         string $transid,
@@ -37,8 +34,7 @@ class POSAgentCashout
         string $amount,
         string $pin,
         string $name,
-    ): array
-    {
+    ): array {
         return [
             'transid' => $transid,
             'utilitycode' => $utilitycode,
@@ -72,11 +68,11 @@ class POSAgentCashout
 
     public function queryTransactionStatus(string $transid)
     {
+        $client = new LaravelSelcomClient(['transid' => $transid]);
 
         $client = new LaravelSelcomClient(['transid' =>$transid]);
 
         return $client->sendRequest(config('selcom.urls.pos_agent_cashout.query_transaction_status.method','post'),
             config('selcom.urls.pos_agent_cashout.query_transaction_status.url',''));
     }
-
 }

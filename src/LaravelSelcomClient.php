@@ -3,7 +3,6 @@
 
 namespace Omakei\LaravelSelcom;
 
-
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
@@ -11,7 +10,6 @@ use Omakei\LaravelSelcom\Exceptions\InvalidRequestTypeException;
 
 class LaravelSelcomClient
 {
-
     protected array $headers;
 
     protected string $authorization;
@@ -22,11 +20,8 @@ class LaravelSelcomClient
 
     protected string $signed_fields;
 
-
-
     public function __construct(public array $payload)
     {
-
         date_default_timezone_set(config('selcom.timezone'));
 
         $this->setAuthorization(base64_encode(config('selcom.key')));
@@ -48,7 +43,6 @@ class LaravelSelcomClient
             "Signed-Fields" => $this->signed_fields,
         ]);
     }
-
 
     /**
      * @return string
@@ -132,15 +126,12 @@ class LaravelSelcomClient
 
     private function computeSignature(array $parameters, string $signed_fields): string
     {
-
         $fields_order = explode(',', $signed_fields);
 
         $sign_data = "timestamp=". $this->getTimestamp();
 
         foreach ($fields_order as $key) {
-
             $sign_data .= "&$key=".$parameters[$key];
-
         }
 
         //RS256 Signature Method
@@ -151,7 +142,6 @@ class LaravelSelcomClient
             openssl_sign($sign_data, $signature, $private_key_pem, OPENSSL_ALGO_SHA256);
 
             return base64_encode($signature);
-
         }
 
         //HS256 Signature Method
@@ -162,15 +152,11 @@ class LaravelSelcomClient
         }
 
         return '';
-
     }
 
-
-    public function sendPostRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendPostRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->post($url, $this->payload);
             info($response);
         }catch (\Exception $exception) {
@@ -181,11 +167,9 @@ class LaravelSelcomClient
         return  $response;
     }
 
-    public function sendGetRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendGetRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->get($url, $this->payload);
             info($response);
         }catch (\Exception $exception) {
@@ -196,11 +180,9 @@ class LaravelSelcomClient
         return  $response;
     }
 
-    public function sendPutRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendPutRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->put($url, $this->payload);
             info($response);
         }catch (\Exception $exception) {
@@ -211,11 +193,9 @@ class LaravelSelcomClient
         return  $response;
     }
 
-    public function sendPatchRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendPatchRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->patch($url, $this->payload);
             info($response);
         }catch (\Exception $exception) {
@@ -226,12 +206,9 @@ class LaravelSelcomClient
         return  $response;
     }
 
-
-    public function sendDeleteRequest(string $url): PromiseInterface|\Exception|Response
+    public function sendDeleteRequest(string $url): PromiseInterface | \Exception | Response
     {
-
         try {
-
             $response = Http::withHeaders($this->headers)->delete($url, $this->payload);
             info($response);
         }catch (\Exception $exception) {
@@ -241,7 +218,6 @@ class LaravelSelcomClient
 
         return  $response;
     }
-
 
     public function sendRequest(string $type, string $url)
     {
@@ -255,7 +231,6 @@ class LaravelSelcomClient
         return $this->$method($url);
     }
 
-
     protected function lookupTable()
     {
         return [
@@ -266,6 +241,4 @@ class LaravelSelcomClient
             'delete' => 'sendDeleteRequest',
         ];
     }
-
-
 }
