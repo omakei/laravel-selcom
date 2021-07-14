@@ -219,7 +219,6 @@ class LaravelSelcomClient
 
     public function sendRequest(string $type, string $url)
     {
-        $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
          $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
