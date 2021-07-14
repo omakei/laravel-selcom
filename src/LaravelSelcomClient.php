@@ -6,6 +6,7 @@ namespace Omakei\LaravelSelcom;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Omakei\LaravelSelcom\Exceptions\InvalidRequestTypeException;
 
 class LaravelSelcomClient
@@ -158,9 +159,9 @@ class LaravelSelcomClient
     {
         try {
             $response = Http::withHeaders($this->headers)->post($url, $this->payload);
-            info($response);
+            Log::info('selcom-request-sent'. $response->throw());
         }catch (\Exception $exception) {
-            info($exception);
+            Log::error($exception->getMessage());
             return $exception;
         }
 
@@ -171,9 +172,9 @@ class LaravelSelcomClient
     {
         try {
             $response = Http::withHeaders($this->headers)->get($url, $this->payload);
-            info($response);
+            Log::info('selcom-request-sent'. $response->throw());
         }catch (\Exception $exception) {
-            info($exception);
+            Log::error($exception->getMessage());
             return $exception;
         }
 
@@ -184,9 +185,9 @@ class LaravelSelcomClient
     {
         try {
             $response = Http::withHeaders($this->headers)->put($url, $this->payload);
-            info($response);
+            Log::info('selcom-request-sent'. $response->throw());
         }catch (\Exception $exception) {
-            info($exception);
+            Log::error($exception->getMessage());
             return $exception;
         }
 
@@ -197,9 +198,9 @@ class LaravelSelcomClient
     {
         try {
             $response = Http::withHeaders($this->headers)->patch($url, $this->payload);
-            info($response);
+            Log::info('selcom-request-sent'. $response->throw());
         }catch (\Exception $exception) {
-            info($exception);
+            Log::error($exception->getMessage());
             return $exception;
         }
 
@@ -210,9 +211,9 @@ class LaravelSelcomClient
     {
         try {
             $response = Http::withHeaders($this->headers)->delete($url, $this->payload);
-            info($response);
+            Log::info('selcom-request-sent'. $response->throw());
         }catch (\Exception $exception) {
-            info($exception);
+            Log::error($exception->getMessage());
             return $exception;
         }
 
@@ -225,7 +226,7 @@ class LaravelSelcomClient
          $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
          if(is_null($method)) {
-             throw InvalidRequestTypeException::create(strtolower($method));
+             throw InvalidRequestTypeException::create(strtolower($type));
          }
 
         return $this->$method($url);
