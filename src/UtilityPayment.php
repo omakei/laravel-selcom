@@ -26,7 +26,7 @@ class UtilityPayment
        $client = new LaravelSelcomClient($payload);
 
       return $client->sendRequest(config('selcom.urls.utility_payments.pay.method','post'),
-                                  config('selcom.urls.utility_payments.pay.ulr',''));
+                                  config('selcom.urls.utility_payments.pay.url',''));
     }
 
 
@@ -58,7 +58,7 @@ class UtilityPayment
         $client = new LaravelSelcomClient($payload);
 
         return $client->sendRequest(config('selcom.urls.utility_payments.lookup.method','post'),
-            config('selcom.urls.utility_payments.lookup.ulr',''));
+            config('selcom.urls.utility_payments.lookup.url',''));
     }
 
 
@@ -77,7 +77,7 @@ class UtilityPayment
         $client = new LaravelSelcomClient(['transid' =>$transid]);
 
         return $client->sendRequest(config('selcom.urls.utility_payments.query_payment_status.method','post'),
-            config('selcom.urls.utility_payments.query_payment_status.ulr',''));
+            config('selcom.urls.utility_payments.query_payment_status.url',''));
     }
 
 }

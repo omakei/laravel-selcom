@@ -7,9 +7,7 @@ namespace Omakei\LaravelSelcom;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
-use mysql_xdevapi\Exception;
 use Omakei\LaravelSelcom\Exceptions\InvalidRequestTypeException;
-use Omakei\LaravelSelcom\Exceptions\IvalidUrlOrRequestTypeException;
 
 class LaravelSelcomClient
 {
@@ -148,7 +146,7 @@ class LaravelSelcomClient
         //RS256 Signature Method
         if(config('selcom.encoding_type') === 'RS256') {
 
-            $private_key_pem = openssl_get_privatekey(file_get_contents(config('path_to_private_key_file')));
+            $private_key_pem = openssl_get_privatekey(file_get_contents(config('selcom.path_to_private_key_file')));
 
             openssl_sign($sign_data, $signature, $private_key_pem, OPENSSL_ALGO_SHA256);
 
@@ -159,7 +157,7 @@ class LaravelSelcomClient
         //HS256 Signature Method
         if(config('selcom.encoding_type') === 'HS256') {
 
-            return base64_encode(hash_hmac('sha256', $sign_data, config('secret'), true));
+            return base64_encode(hash_hmac('sha256', $sign_data, config('selcom.secret'), true));
 
         }
 
@@ -174,9 +172,9 @@ class LaravelSelcomClient
         try {
 
             $response = Http::withHeaders($this->headers)->post($url, $this->payload);
-
+            info($response);
         }catch (\Exception $exception) {
-
+            info($exception);
             return $exception;
         }
 
@@ -189,9 +187,9 @@ class LaravelSelcomClient
         try {
 
             $response = Http::withHeaders($this->headers)->get($url, $this->payload);
-
+            info($response);
         }catch (\Exception $exception) {
-
+            info($exception);
             return $exception;
         }
 
@@ -204,9 +202,9 @@ class LaravelSelcomClient
         try {
 
             $response = Http::withHeaders($this->headers)->put($url, $this->payload);
-
+            info($response);
         }catch (\Exception $exception) {
-
+            info($exception);
             return $exception;
         }
 
@@ -219,9 +217,9 @@ class LaravelSelcomClient
         try {
 
             $response = Http::withHeaders($this->headers)->patch($url, $this->payload);
-
+            info($response);
         }catch (\Exception $exception) {
-
+            info($exception);
             return $exception;
         }
 
@@ -235,9 +233,9 @@ class LaravelSelcomClient
         try {
 
             $response = Http::withHeaders($this->headers)->delete($url, $this->payload);
-
+            info($response);
         }catch (\Exception $exception) {
-
+            info($exception);
             return $exception;
         }
 
@@ -248,13 +246,13 @@ class LaravelSelcomClient
     public function sendRequest(string $type, string $url)
     {
 
-         $request_type = in_array(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
+         $method = array_key_exists(strtolower($type), $this->lookupTable())?$this->lookupTable()[strtolower($type)] : null;
 
-         if(is_null($request_type)) {
-             throw InvalidRequestTypeException::create(strtolower($type));
+         if(is_null($method)) {
+             throw InvalidRequestTypeException::create(strtolower($method));
          }
 
-        return $this->$request_type($type, $url);
+        return $this->$method($url);
     }
 
 

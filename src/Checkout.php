@@ -88,7 +88,7 @@ class Checkout
        $client = new LaravelSelcomClient($payload);
 
       return $client->sendRequest(config('urls.checkout.create_order_long.method','post'),
-                                  config('urls.checkout.create_order_long.ulr',''));
+                                  config('urls.checkout.create_order_long.url',''));
     }
 
 
@@ -216,7 +216,7 @@ class Checkout
         $client = new LaravelSelcomClient($payload);
 
         return $client->sendRequest(config('selcom.urls.checkout.create_order_minimal.method','post'),
-            config('selcom.urls.checkout.create_order_minimal.ulr',''));
+            config('selcom.urls.checkout.create_order_minimal.url',''));
     }
 
 
@@ -272,7 +272,7 @@ class Checkout
         ]);
 
         return $client->sendRequest(config('selcom.urls.checkout.cancel_order.method','post'),
-            config('selcom.urls.checkout.cancel_order.ulr',''));
+            config('selcom.urls.checkout.cancel_order.url',''));
     }
 
 
@@ -301,7 +301,7 @@ class Checkout
         $client = new LaravelSelcomClient($payload);
 
         return $client->sendRequest(config('selcom.urls.checkout.get_order_status.method','post'),
-            config('selcom.urls.checkout.get_order_status.ulr',''));
+            config('selcom.urls.checkout.get_order_status.url',''));
     }
 
 
@@ -344,7 +344,7 @@ class Checkout
             ]);
 
         return $client->sendRequest(config('selcom.urls.checkout.get_all_order_list.method','post'),
-            config('selcom.urls.checkout.get_all_order_list.ulr',''));
+            config('selcom.urls.checkout.get_all_order_list.url',''));
     }
 
     public function getStoredCardTokens(
@@ -359,7 +359,7 @@ class Checkout
         ]);
 
         return $client->sendRequest(config('selcom.urls.checkout.get_stored_card_tokens.method','post'),
-            config('selcom.urls.checkout.get_stored_card_tokens.ulr',''));
+            config('selcom.urls.checkout.get_stored_card_tokens.url',''));
     }
 
     public function deleteStoredCardTokens(
@@ -374,7 +374,7 @@ class Checkout
         ]);
 
         return $client->sendRequest(config('selcom.urls.checkout.delete_stored_card_tokens.method','post'),
-            config('selcom.urls.checkout.delete_stored_card_tokens.ulr',''));
+            config('selcom.urls.checkout.delete_stored_card_tokens.url',''));
     }
 
     public function processOrderCardPayment(
@@ -397,7 +397,7 @@ class Checkout
         ]);
 
         return $client->sendRequest(config('selcom.urls.checkout.process_order_card_payment.method','post'),
-            config('selcom.urls.checkout.process_order_card_payment.ulr',''));
+            config('selcom.urls.checkout.process_order_card_payment.url',''));
     }
 
     public function processOrderWalletPullPayment(
@@ -414,7 +414,7 @@ class Checkout
         ]);
 
         return $client->sendRequest(config('selcom.urls.checkout.process_order_wallet_pull_payment.method','post'),
-            config('selcom.urls.checkout.process_order_wallet_pull_payment.ulr',''));
+            config('selcom.urls.checkout.process_order_wallet_pull_payment.url',''));
     }
 
 
@@ -438,7 +438,7 @@ class Checkout
         ]);
 
         return $client->sendRequest(config('selcom.urls.checkout.webhook_callback.method','post'),
-            config('selcom.urls.checkout.webhook_callback.ulr',''));
+            config('selcom.urls.checkout.webhook_callback.url',''));
     }
 
     public function paymentRefund(
@@ -455,7 +455,7 @@ class Checkout
         ]);
 
         return $client->sendRequest(config('selcom.urls.checkout.payment_refund.method','post'),
-            config('selcom.urls.checkout.payment_refund.ulr',''));
+            config('selcom.urls.checkout.payment_refund.url',''));
     }
 
 

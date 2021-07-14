@@ -26,7 +26,7 @@ class POSAgentCashout
        $client = new LaravelSelcomClient($payload);
 
       return $client->sendRequest(config('selcom.urls.pos_agent_cashout.process.method','post'),
-                                  config('selcom.urls.pos_agent_cashout.process.ulr',''));
+                                  config('selcom.urls.pos_agent_cashout.process.url',''));
     }
 
 
@@ -58,7 +58,7 @@ class POSAgentCashout
         $client = new LaravelSelcomClient($payload);
 
         return $client->sendRequest(config('selcom.urls.pos_agent_cashout.balance.method','post'),
-            config('selcom.urls.pos_agent_cashout.balance.ulr',''));
+            config('selcom.urls.pos_agent_cashout.balance.url',''));
     }
 
 
@@ -76,7 +76,7 @@ class POSAgentCashout
         $client = new LaravelSelcomClient(['transid' =>$transid]);
 
         return $client->sendRequest(config('selcom.urls.pos_agent_cashout.query_transaction_status.method','post'),
-            config('selcom.urls.pos_agent_cashout.query_transaction_status.ulr',''));
+            config('selcom.urls.pos_agent_cashout.query_transaction_status.url',''));
     }
 
 }

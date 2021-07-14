@@ -26,7 +26,7 @@ class WalletCashin
        $client = new LaravelSelcomClient($payload);
 
       return $client->sendRequest(config('selcom.urls.wallet_cashin.pay.method','post'),
-                                  config('selcom.urls.wallet_cashin.pay.ulr',''));
+                                  config('selcom.urls.wallet_cashin.pay.url',''));
     }
 
 
@@ -58,7 +58,7 @@ class WalletCashin
         $client = new LaravelSelcomClient($payload);
 
         return $client->sendRequest(config('selcom.urls.wallet_cashin.lookup.method','post'),
-            config('selcom.urls.wallet_cashin.lookup.ulr',''));
+            config('selcom.urls.wallet_cashin.lookup.url',''));
     }
 
 
@@ -77,7 +77,7 @@ class WalletCashin
         $client = new LaravelSelcomClient(['transid' =>$transid]);
 
         return $client->sendRequest(config('selcom.urls.utility_payments.query_payment_status.method','post'),
-            config('selcom.urls.utility_payments.query_payment_status.ulr',''));
+            config('selcom.urls.utility_payments.query_payment_status.url',''));
     }
 
 }
