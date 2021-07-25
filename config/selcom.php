@@ -137,6 +137,24 @@ return [
         ],
     ],
 
+    'checkout' => [
+        'header_colour' => '#FF0012',
+
+        'link_colour' => '#FF0012',
+
+        'button_colour' => '#FF0012',
+
+        'payment_methods' => 'ALL', // ALL, MASTERPASS, CARD, MOBILEMONEYPULL
+
+        'redirect_url' => base64_encode('your_redirect_url'),
+
+        'cancel_url' => base64_encode('your_cancel_url'),
+
+        'webhook' => base64_encode('your_webhook_url'),
+
+        'expiry' => 60  // minutes
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Selcom Path
@@ -177,7 +195,7 @@ return [
     |
     */
 
-    'currency' => env('SELCOM_CURRENCY', 'usd'),
+    'currency' => env('SELCOM_CURRENCY', 'TSZ'),
 
     /*
     |--------------------------------------------------------------------------
