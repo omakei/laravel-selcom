@@ -5,6 +5,7 @@ namespace Omakei\LaravelSelcom;
 
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Omakei\LaravelSelcom\Exceptions\InvalidRequestTypeException;
@@ -152,67 +153,51 @@ class LaravelSelcomClient
         return '';
     }
 
-    public function sendPostRequest(string $url): PromiseInterface | \Exception | Response
+    public function sendPostRequest(string $url): PromiseInterface|Response
     {
-        try {
-            $response = Http::withHeaders($this->headers)->post($url, $this->payload);
-            Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
-            Log::error($exception->getMessage());
-            return $exception;
-        }
+        $response = Http::withHeaders($this->headers)->post($url, $this->payload);
+
+        $this->logRequest($url,'POST',$response->json()['result'], json_encode($this->payload),$response->body());
 
         return  $response;
     }
 
     public function sendGetRequest(string $url): PromiseInterface | \Exception | Response
     {
-        try {
-            $response = Http::withHeaders($this->headers)->get($url, $this->payload);
-            Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
-            Log::error($exception->getMessage());
-            return $exception;
-        }
+
+        $response = Http::withHeaders($this->headers)->get($url, $this->payload);
+
+        $this->logRequest($url,'GET',$response->json()['result'], json_encode($this->payload),$response->body());
 
         return  $response;
     }
 
     public function sendPutRequest(string $url): PromiseInterface | \Exception | Response
     {
-        try {
-            $response = Http::withHeaders($this->headers)->put($url, $this->payload);
-            Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
-            Log::error($exception->getMessage());
-            return $exception;
-        }
+
+        $response = Http::withHeaders($this->headers)->put($url, $this->payload);
+
+        $this->logRequest($url,'PUT',$response->json()['result'], json_encode($this->payload),$response->body());
 
         return  $response;
     }
 
     public function sendPatchRequest(string $url): PromiseInterface | \Exception | Response
     {
-        try {
-            $response = Http::withHeaders($this->headers)->patch($url, $this->payload);
-            Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
-            Log::error($exception->getMessage());
-            return $exception;
-        }
+
+        $response = Http::withHeaders($this->headers)->patch($url, $this->payload);
+
+        $this->logRequest($url,'PATCH',$response->json()['result'], json_encode($this->payload),$response->body());
 
         return  $response;
     }
 
     public function sendDeleteRequest(string $url): PromiseInterface | \Exception | Response
     {
-        try {
-            $response = Http::withHeaders($this->headers)->delete($url, $this->payload);
-            Log::info('selcom-request-sent'. $response->throw());
-        }catch (\Exception $exception) {
-            Log::error($exception->getMessage());
-            return $exception;
-        }
+
+        $response = Http::withHeaders($this->headers)->delete($url, $this->payload);
+
+        $this->logRequest($url,'DELETE',$response->json()['result'], json_encode($this->payload),$response->body());
 
         return  $response;
     }
@@ -238,5 +223,22 @@ class LaravelSelcomClient
             'patch' => 'sendPatchRequest',
             'delete' => 'sendDeleteRequest',
         ];
+    }
+
+    public function logRequest(string $end_point,
+                               string $request_type,
+                               string $request_status,
+                               string $request_payload,
+                               string $request_response)
+    {
+
+        DB::table('selcom_request_logs_table')->insert([
+            'end_point' => $end_point,
+            'request_type' => $request_type,
+            'request_status' => $request_status,
+            'request_payload' => $request_payload,
+            'request_response' => $request_response,
+
+        ]);
     }
 }

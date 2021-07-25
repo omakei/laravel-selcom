@@ -14,7 +14,7 @@ class LaravelSelcomServiceProvider extends PackageServiceProvider
             ->name('laravel-selcom')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_laravel-selcom_table')
+            ->hasMigration('create_selcom_table')
             ->hasCommand(LaravelSelcomCommand::class);
     }
 }
