@@ -5,7 +5,7 @@ namespace Omakei\LaravelSelcom;
 
 class VCN
 {
-    public static function create(
+    public function create(
         string $msisdn,
         string $account,
         string $first_name,
@@ -55,15 +55,7 @@ class VCN
                                   config('selcom.urls.vcn.create.url',''));
     }
 
-        $client = new LaravelSelcomClient($payload);
-
-        return $client->sendRequest(
-            config('urls.vcn.create.method', 'post'),
-            config('urls.vcn.create.ulr', '')
-        );
-    }
-
-    private static function makeCreatePayload(
+    private  function makeCreatePayload(
         string $msisdn,
         string $account,
         string $first_name,
@@ -133,7 +125,7 @@ class VCN
             config('selcom.urls.vcn.change_status.url',''));
     }
 
-    public function makeChangeStatusPayload(
+    private function makeChangeStatusPayload(
         string $msisdn,
         string $account,
         string $status,
@@ -181,8 +173,6 @@ class VCN
     public function getCardStatus(string $msisdn, string $account)
     {
         $client = new LaravelSelcomClient(['msisdn' => $msisdn, 'account' => $account]);
-
-        $client = new LaravelSelcomClient(['msisdn' =>$msisdn, 'account' => $account]);
 
         return $client->sendRequest(config('selcom.urls.vcn.get_card_status.method','post'),
             config('selcom.urls.vcn.get_card_status.url',''));

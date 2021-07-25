@@ -9,7 +9,7 @@ class WalletCashin
         string $transid,
         string $utilitycode,
         string $utilityref,
-        string $amount,
+        int $amount,
         string $pin,
         string $msisdn,
     ) {
@@ -34,7 +34,7 @@ class WalletCashin
         string $transid,
         string $utilitycode,
         string $utilityref,
-        string $amount,
+        int $amount,
         string $pin,
         string $msisdn,
     ): array {

@@ -12,7 +12,7 @@ class Checkout
         ?string $buyer_userid,
         string $buyer_phone,
         ?string $gateway_buyer_uuid,
-        string $amount,
+        int $amount,
         string $currency,
         string $billing_firstname,
         string $billing_lastname,
@@ -34,7 +34,7 @@ class Checkout
         ?string $shipping_phone,
         ?string $buyer_remarks,
         ?string $merchant_remarks,
-        string $no_of_items,
+        int $no_of_items,
     ) {
         $payload = self::makeCreateOrderLongPayload(
             $order_id,
@@ -83,7 +83,7 @@ class Checkout
         ?string $buyer_userid,
         string $buyer_phone,
         ?string $gateway_buyer_uuid,
-        string $amount,
+        int $amount,
         string $currency,
         string $billing_firstname,
         string $billing_lastname,
@@ -105,7 +105,7 @@ class Checkout
         ?string $shipping_phone,
         ?string $buyer_remarks,
         ?string $merchant_remarks,
-        string $no_of_items,
+        int $no_of_items,
     ): array {
         return [
         'vendor' => config('selcom.vendor'),
@@ -153,7 +153,7 @@ class Checkout
         string $buyer_email,
         string $buyer_name,
         string $buyer_phone,
-        string $amount,
+        int $amount,
         string $currency,
         string $buyer_remarks,
         string $merchant_remarks,
@@ -184,7 +184,7 @@ class Checkout
         string $buyer_email,
         string $buyer_name,
         string $buyer_phone,
-        string $amount,
+        int $amount,
         string $currency,
         string $buyer_remarks,
         string $merchant_remarks,
@@ -229,7 +229,7 @@ class Checkout
         string $payment_status,
         string $order_id,
         string $creation_date,
-        string $amount,
+        int $amount,
         string $transid,
         string $channel,
         string $reference,
@@ -258,7 +258,7 @@ class Checkout
         string $payment_status,
         string $order_id,
         string $creation_date,
-        string $amount,
+        int $amount,
         string $transid,
         string $channel,
         string $reference,
@@ -327,7 +327,6 @@ class Checkout
 
     public function processOrderCardPayment(
         string $transid,
-        string $vendor,
         string $order_id,
         string $card_token,
         string $buyer_userid,
@@ -335,7 +334,7 @@ class Checkout
     ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,
-            'vendor' => $vendor,
+            'vendor' => config('selcom.vendor'),
             'order_id' => $order_id,
             'card_token' => $card_token,
             'buyer_userid' => $buyer_userid,
@@ -365,33 +364,10 @@ class Checkout
         );
     }
 
-    public function webhookCallback(
-        string $transid,
-        string $order_id,
-        string $reference,
-        string $result,
-        string $resultcode,
-        string $payment_status
-    ) {
-        $client = new LaravelSelcomClient([
-            'transid' => $transid,
-            'order_id' => $order_id,
-            'reference' => $reference,
-            'result' => $result,
-            'resultcode' => $resultcode,
-            'payment_status' => $payment_status,
-        ]);
-
-        return $client->sendRequest(
-            config('selcom.urls.checkout.webhook_callback.method', 'post'),
-            config('selcom.urls.checkout.webhook_callback.url', '')
-        );
-    }
-
     public function paymentRefund(
         string $transid,
         string $original_transid,
-        string $amount
+        int $amount
     ) {
         $client = new LaravelSelcomClient([
             'transid' => $transid,

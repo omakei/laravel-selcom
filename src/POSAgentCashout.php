@@ -9,7 +9,7 @@ class POSAgentCashout
         string $transid,
         string $utilitycode,
         string $utilityref,
-        string $amount,
+        int $amount,
         string $pin,
         string $name,
     ) {
@@ -34,7 +34,7 @@ class POSAgentCashout
         string $transid,
         string $utilitycode,
         string $utilityref,
-        string $amount,
+        int $amount,
         string $pin,
         string $name,
     ): array {
