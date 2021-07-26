@@ -25,37 +25,38 @@ class VCN
         string $pin,
         string $transid,
         string $product_code
-    )
-    {
-       $payload =  self::makeCreatePayload(
-        $msisdn,
-        $account,
-        $first_name,
-        $last_name,
-        $middle_name,
-        $gender,
-        $dob,
-        $address,
-        $city,
-        $region,
-        $nationality,
-        $validity,
-        $email,
-        $language,
-        $marital_status,
-        $maiden_name,
-        $pin,
-        $transid,
-        $product_code
-       );
+    ) {
+        $payload = self::makeCreatePayload(
+            $msisdn,
+            $account,
+            $first_name,
+            $last_name,
+            $middle_name,
+            $gender,
+            $dob,
+            $address,
+            $city,
+            $region,
+            $nationality,
+            $validity,
+            $email,
+            $language,
+            $marital_status,
+            $maiden_name,
+            $pin,
+            $transid,
+            $product_code
+        );
 
-       $client = new LaravelSelcomClient($payload);
+        $client = new LaravelSelcomClient($payload);
 
-      return $client->sendRequest(config('selcom.urls.vcn.create.method','post'),
-                                  config('selcom.urls.vcn.create.url',''));
+        return $client->sendRequest(
+            config('selcom.urls.vcn.create.method', 'post'),
+            config('selcom.urls.vcn.create.url', '')
+        );
     }
 
-    private  function makeCreatePayload(
+    private function makeCreatePayload(
         string $msisdn,
         string $account,
         string $first_name,
@@ -121,8 +122,10 @@ class VCN
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('selcom.urls.vcn.change_status.method','post'),
-            config('selcom.urls.vcn.change_status.url',''));
+        return $client->sendRequest(
+            config('selcom.urls.vcn.change_status.method', 'post'),
+            config('selcom.urls.vcn.change_status.url', '')
+        );
     }
 
     private function makeChangeStatusPayload(
@@ -166,16 +169,20 @@ class VCN
 
         $client = new LaravelSelcomClient($payload);
 
-        return $client->sendRequest(config('selcom.urls.vcn.show_card.method','post'),
-            config('selcom.urls.vcn.show_card.url',''));
+        return $client->sendRequest(
+            config('selcom.urls.vcn.show_card.method', 'post'),
+            config('selcom.urls.vcn.show_card.url', '')
+        );
     }
 
     public function getCardStatus(string $msisdn, string $account)
     {
         $client = new LaravelSelcomClient(['msisdn' => $msisdn, 'account' => $account]);
 
-        return $client->sendRequest(config('selcom.urls.vcn.get_card_status.method','post'),
-            config('selcom.urls.vcn.get_card_status.url',''));
+        return $client->sendRequest(
+            config('selcom.urls.vcn.get_card_status.method', 'post'),
+            config('selcom.urls.vcn.get_card_status.url', '')
+        );
     }
 
     public function setTransactionLimit(
@@ -192,7 +199,9 @@ class VCN
             'limit_type' => $limit_type,
             'card_id' => $card_id, ]);
 
-        return $client->sendRequest(config('selcom.urls.vcn.set_transaction_limit.method','post'),
-            config('selcom.urls.vcn.set_transaction_limit.url',''));
+        return $client->sendRequest(
+            config('selcom.urls.vcn.set_transaction_limit.method', 'post'),
+            config('selcom.urls.vcn.set_transaction_limit.url', '')
+        );
     }
 }
