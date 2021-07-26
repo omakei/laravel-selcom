@@ -74,7 +74,9 @@ class WalletCashin
     {
         $client = new LaravelSelcomClient(['transid' => $transid]);
 
-        return $client->sendRequest(config('selcom.urls.utility_payments.query_payment_status.method','post'),
-            config('selcom.urls.utility_payments.query_payment_status.url',''));
+        return $client->sendRequest(
+            config('selcom.urls.utility_payments.query_payment_status.method', 'post'),
+            config('selcom.urls.utility_payments.query_payment_status.url', '')
+        );
     }
 }
