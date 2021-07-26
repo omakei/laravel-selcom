@@ -17,8 +17,8 @@ class LaravelSelcomTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $response = LaravelSelcom::checkout()->cancelOrder(2);
+        $response = LaravelSelcom::checkout()->cancelOrder('2');
 
-        $this->assertEquals(201, $response->b());
+        $this->assertEquals(true, $response->clientError());
     }
 }

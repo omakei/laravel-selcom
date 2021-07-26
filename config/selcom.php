@@ -102,7 +102,7 @@ return [
                 'method' => 'POST'
             ],
             'cancel_order' => [
-                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout/?order_id={order_id}',
+                'url' => env('SELCOM_BASE_URL', 'https://example.com').'/v1/checkout',
                 'method' => 'DELETE'
             ],
             'get_order_status' => [
@@ -155,99 +155,20 @@ return [
         'expiry' => 60  // minutes
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Selcom Path
-    |--------------------------------------------------------------------------
-    |
-    | This is the base URI path where Selcom's views, such as the payment
-    | verification screen, will be available from. You're free to tweak
-    | this path according to your preferences and application design.
-    |
-    */
-
     'path' => env('SELCOM_PATH', 'selcom'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Selcom Webhooks
-    |--------------------------------------------------------------------------
-    |
-    | Your Stripe webhook secret is used to prevent unauthorized requests to
-    | your Stripe webhook handling controllers. The tolerance setting will
-    | check the drift between the current time and the signed request's.
-    |
-    */
 
     'webhook' => [
         'secret' => env('SELCOM_WEBHOOK_SECRET'),
         'tolerance' => env('SELCOM_WEBHOOK_TOLERANCE', 300),
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Currency
-    |--------------------------------------------------------------------------
-    |
-    | This is the default currency that will be used when generating charges
-    | from your application. Of course, you are welcome to use any of the
-    | various world currencies that are currently supported via Stripe.
-    |
-    */
-
     'currency' => env('SELCOM_CURRENCY', 'TSZ'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Currency Locale
-    |--------------------------------------------------------------------------
-    |
-    | This is the default locale in which your money values are formatted in
-    | for display. To utilize other locales besides the default en locale
-    | verify you have the "intl" PHP extension installed on the system.
-    |
-    */
 
     'currency_locale' => env('SELCOM_CURRENCY_LOCALE', 'en'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Payment Confirmation Notification
-    |--------------------------------------------------------------------------
-    |
-    | If this setting is enabled, Selcom will automatically notify customers
-    | whose payments require additional verification. You should listen to
-    | Selcom's webhooks in order for this feature to function correctly.
-    |
-    */
-
     'payment_notification' => env('SELCOM_PAYMENT_NOTIFICATION'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Invoice Paper Size
-    |--------------------------------------------------------------------------
-    |
-    | This option is the default paper size for all invoices generated using
-    | Cashier. You are free to customize this settings based on the usual
-    | paper size used by the customers using your Laravel applications.
-    |
-    | Supported sizes: 'letter', 'legal', 'A4'
-    |
-    */
-
     'paper' => env('SELCOM_PAPER', 'letter'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Selcom Logger
-    |--------------------------------------------------------------------------
-    |
-    | This setting defines which logging channel will be used by the Stripe
-    | library to write log messages. You are free to specify any of your
-    | logging channels listed inside the "logging" configuration file.
-    |
-    */
 
     'logger' => env('SELCOM_LOGGER'),
 

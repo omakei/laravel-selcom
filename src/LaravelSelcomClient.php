@@ -157,8 +157,10 @@ class LaravelSelcomClient
     {
         $response = Http::withHeaders($this->headers)->post($url, $this->payload);
 
-        $this->logRequest($url,'POST',$response->json()['result'], json_encode($this->payload),$response->body());
-
+        if(!empty($response->json()['result']))
+        {
+            $this->logRequest($url,'POST',$response->json()['result'], json_encode($this->payload),$response->body());
+        }
         return  $response;
     }
 
@@ -167,8 +169,10 @@ class LaravelSelcomClient
 
         $response = Http::withHeaders($this->headers)->get($url, $this->payload);
 
-        $this->logRequest($url,'GET',$response->json()['result'], json_encode($this->payload),$response->body());
-
+        if(!empty($response->json()['result']))
+        {
+            $this->logRequest($url,'GET',$response->json()['result'], json_encode($this->payload),$response->body());
+        }
         return  $response;
     }
 
@@ -177,8 +181,10 @@ class LaravelSelcomClient
 
         $response = Http::withHeaders($this->headers)->put($url, $this->payload);
 
-        $this->logRequest($url,'PUT',$response->json()['result'], json_encode($this->payload),$response->body());
-
+        if(!empty($response->json()['result']))
+        {
+            $this->logRequest($url,'PUT',$response->json()['result'], json_encode($this->payload),$response->body());
+        }
         return  $response;
     }
 
@@ -187,8 +193,10 @@ class LaravelSelcomClient
 
         $response = Http::withHeaders($this->headers)->patch($url, $this->payload);
 
-        $this->logRequest($url,'PATCH',$response->json()['result'], json_encode($this->payload),$response->body());
-
+        if(!empty($response->json()['result']))
+        {
+            $this->logRequest($url,'PATCH',$response->json()['result'], json_encode($this->payload),$response->body());
+        }
         return  $response;
     }
 
@@ -197,7 +205,11 @@ class LaravelSelcomClient
 
         $response = Http::withHeaders($this->headers)->delete($url, $this->payload);
 
-        $this->logRequest($url,'DELETE',$response->json()['result'], json_encode($this->payload),$response->body());
+        if(!empty($response->json()['result']))
+        {
+            $this->logRequest($url,'DELETE',$response->json()['result'], json_encode($this->payload),$response->body());
+        }
+
 
         return  $response;
     }
