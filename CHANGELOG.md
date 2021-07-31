@@ -2,8 +2,12 @@
 
 All notable changes to `laravel-selcom`.
 
-## 1.0.0 - 2021-07-26
+## v1.0.0-alpha - 2021-07-26
 
 - initial release
 - selcom checkout, VCN, Utility Payment, POS Agent Cashout,
   and Wallet Cashin API.
+
+## v1.0.1-alpha - 2021-08-01
+
+- bugfix, remove payment_methods attribute from create order minimal endpoint
