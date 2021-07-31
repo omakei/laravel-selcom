@@ -198,7 +198,6 @@ class Checkout
             'buyer_phone' => $buyer_phone,
             'amount' => $amount,
             'currency' => $currency,
-            'payment_methods' => config('selcom.checkout.payment_methods'),
             'redirect_url' => config('selcom.checkout.redirect_url'),
             'cancel_url' => config('selcom.checkout.cancel_url'),
             'webhook' => config('selcom.checkout.webhook'),
