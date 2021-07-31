@@ -10,4 +10,4 @@ All notable changes to `laravel-selcom`.
 
 ## v1.0.1-alpha - 2021-08-01
 
-- bugfix, remove payment_methods attribute from create order minimal endpoint
+- bugfix, remove `payment_methods` attribute from create order minimal endpoint.
