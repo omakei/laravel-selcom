@@ -236,8 +236,7 @@ class LaravelSelcomClient
         string $request_status,
         string $request_payload,
         string $request_response
-    )
-    {
+    ) {
         DB::table('selcom_request_logs_table')->insert([
             'end_point' => $end_point,
             'request_type' => $request_type,
