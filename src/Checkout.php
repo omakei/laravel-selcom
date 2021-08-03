@@ -71,8 +71,8 @@ class Checkout
         $client = new LaravelSelcomClient($payload);
 
         return $client->sendRequest(
-            config('urls.checkout.create_order_long.method', 'post'),
-            config('urls.checkout.create_order_long.url', '')
+            config('selcom.urls.checkout.create_order_long.method', 'post'),
+            config('selcom.urls.checkout.create_order_long.url', '')
         );
     }
 
