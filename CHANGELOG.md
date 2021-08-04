@@ -16,3 +16,6 @@ All notable changes to `laravel-selcom`.
 
 - bugfix, loading create order url from the selcom config file.
 
+## v1.0.3-alpha - 2021-08-04
+
+- bugfix, fix `create_order_long` shipping and billing field names.
